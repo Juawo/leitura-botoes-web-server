@@ -1,6 +1,6 @@
 ## Tarefas 
 
-    - [ ] Ler botões A e B
+    - [X] Ler botões A e B
     - [ ] Enviar estados dos botões a cada 1s para o servidor
 
 ### Desafios
