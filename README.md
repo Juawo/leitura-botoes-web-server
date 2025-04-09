@@ -7,3 +7,4 @@
     - [ ] Exibir o estado dos botões em uma página HTML com CSS
     - [ ] Adicionar sensor de temperatura e enviar informações do mesmo
     - [ ] Exibir informaçẽos do sensor de temperatura 
+    - [ ] Permitir usário digitar o nome da rede e senha da rede
