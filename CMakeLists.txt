@@ -35,7 +35,12 @@ pico_sdk_init()
 
 # Add executable. Default name is the project name, version 0.1
 
-add_executable(leitura-botoes-web-server leitura-botoes-web-server.c )
+add_executable(leitura-botoes-web-server leitura-botoes-web-server.c
+src/button_monitor.c
+src/temperature_sensor.c
+src/web_server.c
+src/html_page.c
+)
 
 pico_set_program_name(leitura-botoes-web-server "leitura-botoes-web-server")
 pico_set_program_version(leitura-botoes-web-server "0.1")
@@ -52,16 +57,17 @@ target_link_libraries(leitura-botoes-web-server
         pico_stdlib)
 
 # Add the standard include files to the build
-target_include_directories(leitura-botoes-web-server PRIVATE
+target_include_directories(leitura-botoes-web-server PRIVATE 
         ${CMAKE_CURRENT_LIST_DIR}
         ${PICO_SDK_PATH}/lib/lwip/src/include
         ${PICO_SDK_PATH}/lib/lwip/src/include/arch
         ${PICO_SDK_PATH}/lib/lwip/src/include/lwip
+        include
 )
 
 target_sources(leitura-botoes-web-server PRIVATE
     ${PICO_SDK_PATH}/lib/lwip/src/apps/http/httpd.c
-    ${PICO_SDK_PATH}/lib/lwipaa/src/apps/http/fs.c
+    ${PICO_SDK_PATH}/lib/lwip/src/apps/http/fs.c
 )
 
 # Add any user requested libraries
