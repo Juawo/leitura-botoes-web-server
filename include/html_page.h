@@ -7,6 +7,6 @@
 #include "pico/stdlib.h"
 #include "button_monitor.h"
 
-char* write_html(char *html_buffer, size_t buffer_size, float temperature, ButtonStates btns_states);
+void write_html(char *html_buffer, size_t buffer_size, float temperature, ButtonStates btns_states);
 
 #endif
