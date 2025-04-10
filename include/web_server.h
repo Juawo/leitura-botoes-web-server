@@ -14,7 +14,7 @@ static char WIFI_SSID[64];
 static char WIFI_PASSWORD[64];
 
 void input_wifi_data(char *wifi_name, char *wifi_password);
-static err_t tcp_server_accept_connectcion(void *arg, struct tcp_pcb *newpcb, err_t err);
-static err_t tcp_server_recv_data(void *arg, struct tcp_pcb *tpcb, struct pbuf *package, err_t err);
+err_t tcp_server_accept_connection(void *arg, struct tcp_pcb *newpcb, err_t err);
+err_t tcp_server_recv_data(void *arg, struct tcp_pcb *tpcb, struct pbuf *package, err_t err);
 
 #endif

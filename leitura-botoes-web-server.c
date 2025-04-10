@@ -37,10 +37,28 @@ int main()
         printf("IP do dispositivo : %s\n", ipaddr_ntoa(&netif_default->ip_addr)); // Exibe o IP do dispositivo
     }
     
+    struct tcp_pcb *server = tcp_new();
+    if(!server)
+    {
+        printf("Falha ao criar servidor TCP! \n");
+        return -1;
+    }
 
+    if(tcp_bind(server, IP_ADDR_ANY, 80) != ERR_OK)
+    {
+        printf("Falha ao associar servidor à porta 80!\n");
+        return -1;
+    }
+
+    server = tcp_listen(server);
+    tcp_accept(server, tcp_server_accept_connection);
+
+    printf("Servidor rodando na porta 80! \n");
 
     while (true) {
-        printf("Hello, world!\n");
-        sleep_ms(1000);
+        cyw43_arch_poll();
     }
+
+    cyw43_arch_deinit();
+    return 0;
 }
