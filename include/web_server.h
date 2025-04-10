@@ -10,8 +10,8 @@
 #include "lwip/tcp.h"
 #include "lwip/pbuf.h"
 
-char WIFI_SSID[64];
-char WIFI_PASSWORD[64];
+static char WIFI_SSID[64];
+static char WIFI_PASSWORD[64];
 
 void input_wifi_data(char *wifi_name, char *wifi_password);
 static err_t tcp_server_accept_connectcion(void *arg, struct tcp_pcb *newpcb, err_t err);

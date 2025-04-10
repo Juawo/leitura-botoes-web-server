@@ -1,24 +1,16 @@
 #include <stdio.h>
 #include "pico/stdlib.h"
 #include "pico/cyw43_arch.h"
-
-/*
-#include "pico/stdlib.h" // Biblioteca padrão do Pico SDK para GPIO, temporização e funções básicas
-#include "hardware/adc.h" // Biblioteca para uso do ADC (Conversor Analógico-Digital) para leitura de temperatura
-#include "pico/cyw43_arch.h" // Biblioteca para controle do chip Wi-Fi CYW43 usado no Raspberry Pi Pico W
-#include <stdio.h> // Biblioteca padrão para entrada/saída, usada para printf e outras funções de I/O
-#include <string.h> // Biblioteca padrão para manipulação de strings, usada em strstr, memcpy, etc.
-#include <stdlib.h> // Biblioteca padrão para alocação de memória dinâmica e outras funções utilitárias
-#include "lwip/pbuf.h" // Biblioteca do LWIP para manipulação de buffers de pacotes TCP/IP
-#include "lwip/tcp.h" // Biblioteca do LWIP para controle e manipulação de conexões TCP
-#include "lwip/netif.h" // Biblioteca do LWIP para manipulação de interfaces de rede e endereços IP
-*/
-
+#include "button_monitor.h"
+#include "temperature_sensor.h"
+#include "web_server.h"
 
 int main()
 {
     stdio_init_all();
-    
+    setup_buttons();
+    setup_temperature_sensor();
+
     // Initialise the Wi-Fi chip
     if (cyw43_arch_init()) {
         printf("Wi-Fi init failed\n");
@@ -27,6 +19,25 @@ int main()
 
     // Example to turn on the Pico W LED
     cyw43_arch_gpio_put(CYW43_WL_GPIO_LED_PIN, 1);
+    cyw43_arch_enable_sta_mode();
+
+    printf("Conectando ao Wi-Fi ...\n");
+    input_wifi_data(WIFI_SSID, WIFI_PASSWORD);
+    while(cyw43_arch_wifi_connect_timeout_ms(WIFI_SSID, WIFI_PASSWORD, CYW43_AUTH_WPA2_AES_PSK, 20000))
+    {
+        printf("Falha ao conectar à rede : %s \n", WIFI_SSID);
+        sleep_ms(100);
+        return -1;
+    }
+
+    printf("Conectado à rede Wi-Fi! \n");
+
+    if(netif_default)
+    {
+        printf("IP do dispositivo : %s\n", ipaddr_ntoa(&netif_default->ip_addr)); // Exibe o IP do dispositivo
+    }
+    
+
 
     while (true) {
         printf("Hello, world!\n");
